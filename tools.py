@@ -1,4 +1,8 @@
 from crewai.tools import tool
+from crewai_tools import SerperDevTool, ScrapeWebsiteTool
+
+search_tool = SerperDevTool()
+scrape_tool = ScrapeWebsiteTool()
 
 @tool
 def count_letters(sentence: str):

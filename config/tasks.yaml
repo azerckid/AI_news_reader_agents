@@ -18,3 +18,4 @@ count_task:
   expected_output: >
     The number of letters in a sentence.
   agent: counter_agent
+
