@@ -2,6 +2,7 @@ import os
 import dotenv
 from crewai import Crew, Agent, Task, LLM
 from crewai.project import CrewBase, agent, task, crew
+from tools import count_letters
 
 dotenv.load_dotenv()
 
@@ -25,6 +26,15 @@ class TranslatorCrew:
             verbose=True
         )
 
+    @agent
+    def counter_agent(self) -> Agent:
+        return Agent(
+            config=self.agents_config["counter_agent"],
+            tools=[count_letters],
+            llm=self.llm,
+            verbose=True
+        )
+
     @task
     def translate_task(self) -> Task:
         return Task(
@@ -35,6 +45,12 @@ class TranslatorCrew:
     def retranslate_task(self) -> Task:
         return Task(
             config=self.tasks_config["retranslate_task"],
+        )
+
+    @task
+    def count_task(self) -> Task:
+        return Task(
+            config=self.tasks_config["count_task"],
         )
 
     @crew
@@ -48,7 +64,7 @@ class TranslatorCrew:
 def main():
     TranslatorCrew().assemble_crew().kickoff(
         inputs={
-            "sentence": "I'm Nico and I like to ride my bicicle in Napoli",
+            "sentence": "I'm Henry and I like to ride my bicicle in Napoli",
         }
     )
 
